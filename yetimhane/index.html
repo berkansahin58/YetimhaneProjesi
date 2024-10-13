@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İBB Yetimhane Uygulaması</title>
+    <meta name="keywords" content="İstanbul, Yetimhane">
+    <meta name="description" content="Yetimhane Uygulaması">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Fonts Google -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wdth,wght@0,75..100,300..800;1,75..100,300..800&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="images/esirgeme.png">
+    <!-- Tablet -->
+    <link rel="stylesheet" media="(max-width:768px)" href="css/tablet.css">
+    <link rel="stylesheet" media="(max-width:500px)" href="css/mobile.css">
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl/dist/maplibre-gl.css"/>
+    <script src="https://unpkg.com/maplibre-gl/dist/maplibre-gl.js"></script>
+</head>
+<body>
+    <header class="bg-dark-blue">
+        <div class="container">
+            <nav id="navbar">
+                <a href="#"><i class="fa-solid fa-school"></i></a>
+                <h1 class="heading-small">ibbyetimhane</h1>
+            </nav>
+        </div>
+    </header>
+
+    <section id="yetimhane">
+        <div class="container">
+            <div id="map"></div>
+              
+            <div id="sidebar">
+                
+
+                <div class="search">
+                    <input id="searchbar" 
+               onkeyup="myFunction()" 
+               type="text" title="Type in a name"
+               placeholder="Yetimhane Ara..">
+                </div>
+
+                <ul id='list'>
+                    
+                    <!-- <li onclick="handleClickItem(0)">Yakacık Hatice Abbas Halim Çocuk Evleri Sitesi Müdürlüğü</li>
+                    <li onclick="handleClickItem(1)">İstanbul Valiliği Eyüp Çocuk Yuvası Müdürlügü</li>
+                    <li onclick="handleClickItem(2)">T.C İstanbul Valiliği Üsküdar Hasan Tan Çocuk Yuvası</li>
+                    <li onclick="handleClickItem(3)">T.C İstanbul Valiliği Küçükyalı Çocuk Evleri Sitesi Müdürlüğü</li>
+                    <li onclick="handleClickItem(4)">Kasımpaşa Çocuk Yuvası</li>
+                    <li onclick="handleClickItem(5)">Emrullah Turanlı Çocuk Evleri Sitesi</li>
+                    <li onclick="handleClickItem(6)">Bahçelievler Şeyh Zayed Çocuk Evleri Sitesi</li>
+                    <li onclick="handleClickItem(7)">Zeytinburnu Çocuk Evleri Sitesi Müdürlüğü</li>
+                    <li onclick="handleClickItem(8)">T.C. İstanbul Valiliği Kocamustafapaşa Çocuk Evleri Sitesi Müdürlüğü</li>
+                    <li onclick="handleClickItem(9)">Darülaceze Çocuk Yuvası</li>
+                    <li onclick="handleClickItem(10)">Semiha Şakir Çocuk Evleri Sitesi</li>
+                    <li onclick="handleClickItem(11)">Halkalı Yetiştirme Yurdu</li> -->
+                </ul>
+    
+    
+            </div>
+    
+            
+        </div>
+    </section>
+</body>
+
+<script>
+
+    const bounds = 
+[
+    [27.9, 40.7], // sol alt
+    [30, 41.7] // sağ üst
+];
+    const map = new maplibregl.Map({
+        container: 'map', // container id
+        style:
+            'https://api.maptiler.com/maps/streets/style.json?key=aVIF46VV8VEMda1xrLgm',
+        center: [28.979530, 41.015137], // starting position
+        zoom: 9, // starting zoom
+        maxBounds: bounds
+    });
+
+    map.on('load', async () => {
+
+        // Add an image to use as a custom marker
+        const image = await map.loadImage("images/esirgeme.png");
+        map.addImage('custom-marker', image.data);
+        // Add a GeoJSON source with 15 points
+        map.addSource('conferences', {
+            'type': 'geojson',
+            'data': {
+                
+                "type": "FeatureCollection",
+                "features": [
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Yakacık Hatice Abbas Halim Çocuk Evleri Sitesi Müdürlüğü",
+                            'description': 
+                            '<strong>Yakacık Hatice Abbas Halim Çocuk Evleri Sitesi Müdürlüğü</strong><p>Adres : Yakacık Çarşı, Kartal Cd. No:19, 34876 Kartal/İstanbul</p><p>Telefon numarası : 0216 377 1392</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                29.22437160857683,
+                                40.91773918989631
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "T.C. İstanbul Valiliği Eyüp Çocuk Yuvası Müdürlüğü",
+                            'description':
+                            '<strong>T.C. İstanbul Valiliği Eyüp Çocuk Yuvası Müdürlüğü</strong><p>Adres : Eyüp Merkez, Fahri Korutürk Cd. No:32, 34050 Eyüpsultan/İstanbul</p><p>Telefon numarası : 0212 418 8830</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                28.9318832723699,
+                                41.04897800559556
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "T.C İstanbul Valiliği Üsküdar Hasan Tan Çocuk Yuvası",
+                            'description':
+                            '<strong>T.C İstanbul Valiliği Üsküdar Hasan Tan Çocuk Yuvası</strong><p>Adres : Aziz Mahmut Hüdayi, Grifzenasım Çıkmazı No:6, 34672 Üsküdar/İstanbul - Asya</p><p>Telefon numarası : 0216 341 8442</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                29.014723348955954,
+                                41.02030450492839
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "T.C İstanbul Valiliği Küçükyalı Çocuk Evleri Sitesi Müdürlüğü",
+                            'description':
+                            '<strong>T.C İstanbul Valiliği Küçükyalı Çocuk Evleri Sitesi Müdürlüğü</strong><p>Adres : Küçükyalı, Merkez Mah, Mektep Cd. No:17, 34840 Maltepe/İstanbul</p><p>Telefon numarası : -</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                29.109511920614437,
+                                40.94920235075287
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Kasımpaşa Çocuk Yuvası",
+                            'description':
+                            '<strong>Kasımpaşa Çocuk Yuvası</strong><p>Adres : Küçük Piyale, 11, Yulcu Sokağı Kasımpaşa, 34440 Beyoğlu/İstanbul</p><p>Telefon numarası : 0212 235 6206</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                28.967467224856392,
+                                41.035412666802216
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Emrullah Turanlı Çocuk Evleri Sitesi",
+                            'description':
+                            '<strong>Emrullah Turanlı Çocuk Evleri Sitesi</strong><p>Adres : Esentepe, Çanakkale Mahallesi No:94, 34870 Kartal/İstanbul</p><p>Telefon numarası : 0216 374 1171</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                29.185384404643344,
+                                40.91042631736454
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Bahçelievler Şeyh Zayed Çocuk Evleri Sitesi",
+                            'description':
+                            '<strong>Bahçelievler Şeyh Zayed Çocuk Evleri Sitesi</strong><p>Adres : Bahçelievler, Adnan Kahveci Blv. No:213, 34180 Bahçelievler/İstanbul</p><p>Telefon numarası : 0212 441 7078</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                28.858079357161643,
+                                40.998517735666326
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Zeytinburnu Çocuk Evleri Sitesi Müdürlüğü",
+                            'description':
+                            '<strong>Zeytinburnu Çocuk Evleri Sitesi Müdürlüğü</strong><p>Adres : Beştelsiz, no:1, 109/1. Sk., 34020 Zeytinburnu/İstanbul</p><p>Telefon numarası : 0212 221 7708</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                28.908280332790326,
+                                40.997082012079716
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "T.C. İstanbul Valiliği Kocamustafapaşa Çocuk Evleri Sitesi Müdürlüğü",
+                            'description':
+                            '<strong>T.C. İstanbul Valiliği Kocamustafapaşa Çocuk Evleri Sitesi Müdürlüğü</strong><p>Adres : Koca Mustafapaşa, Marmara Cd., 34098 Fatih/İstanbul</p><p>Telefon numarası : -</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                28.933700516867702,
+                                41.00436969944178
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Darülaceze Çocuk Yuvası",
+                            'description':
+                            '<strong>Darülaceze Çocuk Yuvası</strong><p>Adres : Kayışdağı, Yavuz Bey Sk. No:20, 34755 Dudullu Organize Sanayi Bölgesi/Ataşehir/İstanbul</p><p>Telefon numarası : -</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                29.14935817501356,
+                                40.97787515144873
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Semiha Şakir Çocuk Evleri Sitesi",
+                            'description':
+                            '<strong>Semiha Şakir Çocuk Evleri Sitesi</strong><p>Adres : Merdivenköy, Göztepe Kavşağı No:58, 34732 Kadıköy/İstanbul</p><p>Telefon numarası : 0216 411 5780</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                29.074231197028297,
+                                40.98928484312856
+                            ],
+                            "type": "Point"
+                        }
+                    },
+                    {
+                        "type": "Feature",
+                        "properties": {
+                            "name": "Halkalı Yetiştirme Yurdu",
+                            'description':
+                            '<strong>Halkalı Yetiştirme Yurdu</strong><p>Adres : Halkalı Merkez, Koru Cd. No:12, 34303 Küçükçekmece/İstanbul</p><p>Telefon numarası : -</p>'
+                        },
+                        "geometry": {
+                            "coordinates": [
+                                28.791681114408874,
+                                41.03326221124283
+                            ],
+                            "type": "Point"
+                        }
+                    }
+                ]
+            }
+        })
+        // Add a symbol layer
+        map.addLayer({
+            'id': 'conferences',
+            'type': 'symbol',
+            'source': 'conferences',
+            'layout': {
+                'icon-image': 'custom-marker',
+                // get the year from the source's "year" property
+                'text-field': ['get', 'year'],
+                'text-font': [
+                    'Open Sans Semibold',
+                    'Arial Unicode MS Bold'
+        ],
+        'text-offset': [0, 1.25],
+        'text-anchor': 'top'
+    }
+});
+    });
+
+
+    var locations = [
+        { lat: 29.22437160857683, lng: 40.91773918989631, zoom: 14},
+        { lat: 28.9318832723699, lng: 41.04897800559556, zoom: 14},
+        { lat: 29.014723348955954, lng: 41.02030450492839, zoom: 14},
+        { lat: 29.109511920614437, lng: 40.94920235075287, zoom: 14},
+        { lat: 28.967467224856392, lng: 41.035412666802216, zoom: 14},
+        { lat: 29.185384404643344, lng: 40.91042631736454, zoom: 14},
+        { lat: 28.858079357161643, lng: 40.998517735666326, zoom: 14},
+        { lat: 28.908280332790326, lng: 40.997082012079716, zoom: 14},
+        { lat: 28.933700516867702, lng: 41.00436969944178, zoom: 14},
+        { lat: 29.14935817501356, lng: 40.97787515144873, zoom: 14},
+        { lat: 29.074231197028297, lng: 40.98928484312856, zoom: 14},
+        { lat: 28.791681114408874, lng: 41.03326221124283, zoom: 14}
+    ];
+
+    function handleClickItem(index) {
+        var location = locations[index];
+        map.flyTo({
+            center: [location.lat, location.lng],
+            zoom: location.zoom,
+            speed: 1,
+            curve: 1
+        });
+    }
+
+
+
+
+
+
+    const popup = new maplibregl.Popup({
+        closeButton: false,
+        closeOnClick: false
+    });
+    map.on('mouseenter', 'conferences', (e) => {
+        
+        map.getCanvas().style.cursor = 'pointer';
+        const coordinates = e.features[0].geometry.coordinates.slice();
+        const description = e.features[0].properties.description;
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+            coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
+        popup.setLngLat(coordinates).setHTML(description).addTo(map);
+    });
+    map.on('mouseleave', 'conferences', () => {
+        map.getCanvas().style.cursor = '';
+        popup.remove();
+    });
+
+    function myFunction() {
+        const input = document.getElementById('searchbar').value.toLowerCase();
+        const listItems = document.getElementById('list').getElementsByTagName('li');
+        for (i = 0; i < listItems.length; i++) {
+            const itemText = listItems[i].textContent || listItems[i].innerText;
+            if (itemText.toLowerCase().indexOf(input) > -1) {
+                listItems[i].style.display = "";
+
+            }else {
+                listItems[i].style.display = "none";
+            }
+        }
+    }
+    
+    async function getOrphanages() {
+        const response = await fetch('http://127.0.0.1:8000/yetimhaneler')
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return await response.json();
+    }
+
+    async function populateOrphanagesList() {
+        const orphanages = await getOrphanages();
+
+        const list = document.getElementById('list');
+        console.log(list);
+        
+        list.innerHTML = '';
+
+        orphanages.forEach((orphanage, index) => {
+            const listItem = document.createElement('li');
+
+            const adSpan = document.createElement('span');
+            adSpan.classList.add('orphanage-ad');
+            adSpan.innerText = orphanage.ad;
+
+            const adresSpan = document.createElement('span');
+            adresSpan.classList.add('orphanage-adres');
+            adresSpan.innerText = orphanage.adres;
+
+            listItem.appendChild(adSpan);
+            listItem.appendChild(adresSpan);
+            listItem.setAttribute('onclick', `handleClickItem(${index})`);
+            list.appendChild(listItem);
+        });
+    }
+    window.onload = populateOrphanagesList;
+    
+
+
+
+
+</script>
+</html>
